@@ -2,37 +2,22 @@
 @page "/staffadd"
 @inject IStaffService StaffService
 @inject NavigationManager NavigationManager
-@inject IJSRuntime jsRuntime
 
 
 
 <h1>type your expected salary </h1>
 
-<EditForm Model="@staffInfo" OnValidSubmit="@HandleValidSubmit">
-    <DataAnnotationsValidator />
-    @*<ValidationSummary />*@
 
     <table>
         <tr>
             <td>姓名：</td>
-            <td>
-                <input type="text" @bind="staffInfo.Name" />
-                <ValidationMessage For="@(()=>staffInfo.Name)" />
-            </td>
-
         </tr>
         <tr>
             <td>期望薪資：</td>
-            <td>
-                <input type="number" @bind="staffInfo.ExpectedSalary" />
-                <ValidationMessage For="@(()=>staffInfo.ExpectedSalary)" />
-            </td>
-
         </tr>
         <tr>
             <td colspan="2" style="text-align:center"></td>
             <td>
-                <button class="btn btn-primary" type="submit">Submit</button>
                 <input type="button" value="Cancel" @onclick="@Cancel" />
             </td>
         </tr>
@@ -46,17 +31,15 @@
     //Creadit a new, empty Staff object
     StaffInfo staffInfo = new StaffInfo();
 
-    public string Message { get; set; }
-    void HandleValidSubmit()
     {
-        staffInfo.UpdDtm = DateTime.Now;
-        Message = $"{staffInfo.Name} , {staffInfo.ExpectedSalary},{staffInfo.UpdDtm}";
+        }
+
+        //NavigationManager.NavigateTo("/");
+
     }
-  
 
     protected void Cancel()
     {
-        NavigationManager.NavigateTo("/staffadd");
     }
 
 }
