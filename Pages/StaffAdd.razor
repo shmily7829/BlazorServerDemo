@@ -2,7 +2,7 @@
 @page "/staffadd"
 @inject IStaffService StaffService
 @inject NavigationManager NavigationManager
-@inject IJSRuntime jsRuntime
+@inject IJSRuntime JS
 
 
 
@@ -38,7 +38,7 @@
         </tr>
     </table>
 
-    <div class="display-1 text-success">@Message</div>
+    @*<div class="display-1 text-success">@Message</div>*@
 
 </EditForm>
 
@@ -47,12 +47,15 @@
     StaffInfo staffInfo = new StaffInfo();
 
     public string Message { get; set; }
-    void HandleValidSubmit()
+
+    private async Task HandleValidSubmit()
     {
         staffInfo.UpdDtm = DateTime.Now;
-        Message = $"{staffInfo.Name} , {staffInfo.ExpectedSalary},{staffInfo.UpdDtm}";
+        Message = $"{staffInfo.Name},\n{staffInfo.ExpectedSalary},\n{staffInfo.UpdDtm}";
+        await JS.InvokeVoidAsync("alert", Message);
     }
 
+    //https://www.gushiciku.cn/pl/puWk/zh-tw
 
     protected void Cancel()
     {
