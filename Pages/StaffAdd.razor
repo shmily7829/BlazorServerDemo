@@ -19,7 +19,6 @@
                 <input type="text" @bind="staffInfo.Name" />
                 <ValidationMessage For="@(()=>staffInfo.Name)" />
             </td>
-
         </tr>
         <tr>
             <td>期望薪資：</td>
@@ -33,8 +32,25 @@
             <td colspan="2" style="text-align:center"></td>
             <td>
                 <button class="btn btn-primary" type="submit">Submit</button>
-                <input type="button" value="Cancel" @onclick="@Cancel" />
+                <button class="btn btn-primary" @onclick="@Cancel">Cancel</button>
             </td>
+        </tr>
+        <tr>
+            <td>
+                IJSRuntime 顯示alert訊息          
+            </td>
+            <td>
+                <a href="https://www.gushiciku.cn/pl/puWk/zh-tw">Link Me</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Data Annotataion表單驗證
+            </td>
+            <td>
+                <a href="https://csharpkh.blogspot.com/2021/07/Blazor-must-learn-skill-Form-Validation-EditForm-DataAnnotationsValidator-ValidationSummary-Required.html?m=0">Link Me</a>
+            </td>
+
         </tr>
     </table>
 
@@ -50,16 +66,16 @@
 
     private async Task HandleValidSubmit()
     {
-        staffInfo.UpdDtm = DateTime.Now;
-        Message = $"{staffInfo.Name},\n{staffInfo.ExpectedSalary},\n{staffInfo.UpdDtm}";
+        //staffInfo.UpdDtm = DateTime.Now;
+        //Message = $"{staffInfo.Name},\n{staffInfo.ExpectedSalary},\n{staffInfo.UpdDtm}";
+
+        Message = await StaffService.StaffInsert(staffInfo);
         await JS.InvokeVoidAsync("alert", Message);
     }
 
-    //https://www.gushiciku.cn/pl/puWk/zh-tw
-
     protected void Cancel()
     {
-        NavigationManager.NavigateTo("/staffadd");
+        NavigationManager.NavigateTo("/");
     }
 
 }

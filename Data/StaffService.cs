@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Text.Json;
+using System.IO;
 
 namespace BlazorServerDemo.Data
 {
@@ -19,30 +21,32 @@ namespace BlazorServerDemo.Data
         }
 
         //add(create) Staff table row
-        public async Task StaffInsert(StaffInfo staff)
+        public async Task<string> StaffInsert(StaffInfo staffInfo)
         {
-            try
+            staffInfo.UpdDtm = DateTime.Now;
+            string json = string.Empty;
+            using (var stream = new MemoryStream())
             {
-                using (var conn = new SqlConnection(_configuration.Value))
-                {
-                    var parameters = new DynamicParameters();
-                    parameters.Add("Name", staff.Name, DbType.String);
-                    parameters.Add("ExpectedSalary", staff.ExpectedSalary, DbType.Decimal);
-                    parameters.Add("UpdDtm", staff.UpdDtm, DbType.DateTime);
-
-                    const string query = @"INSERT INTO Staff  (Name, ExpectedSalary, UpdDtm)
-                                        VALUES (@Name, @ExpectedSalary, @UpdDtm)";
-
-                    await conn.ExecuteAsync(query, new { staff.Name, staff.ExpectedSalary, DateTime.Now }, commandType: CommandType.Text);
-
-                }
+                await JsonSerializer.SerializeAsync(stream, staffInfo, staffInfo.GetType());
+                stream.Position = 0;
+                using var reader = new StreamReader(stream);
+                return await reader.ReadToEndAsync();
             }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+
+            //using (var conn = new SqlConnection(_configuration.Value))
+            //{
+            //    var parameters = new DynamicParameters();
+            //    parameters.Add("Name", staff.Name, DbType.String);
+            //    parameters.Add("ExpectedSalary", staff.ExpectedSalary, DbType.Decimal);
+            //    parameters.Add("UpdDtm", staff.UpdDtm, DbType.DateTime);
+
+            //    const string query = @"INSERT INTO Staff  (Name, ExpectedSalary, UpdDtm)
+            //                        VALUES (@Name, @ExpectedSalary, @UpdDtm)";
+
+            //    await conn.ExecuteAsync(query, new { staff.Name, staff.ExpectedSalary, DateTime.Now }, commandType: CommandType.Text);
+
+            //}
         }
-
     }
 
 

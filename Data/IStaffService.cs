@@ -4,6 +4,6 @@ namespace BlazorServerDemo.Data
 {
     public interface IStaffService
     {
-        Task StaffInsert(StaffInfo staff);
+        Task<string> StaffInsert(StaffInfo staff);
     }
 }
