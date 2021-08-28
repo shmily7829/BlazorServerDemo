@@ -1,0 +1,58 @@
+﻿@using BlazorServerDemo.Data
+@page "/staffadd"
+@inject IStaffService StaffService
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JS
+
+
+<h1>type your expected salary </h1>
+
+<EditForm Model="@staffInfo" OnValidSubmit="@StaffInsert">
+
+    <table>
+        <tr>
+            <td>姓名：</td>
+            <td><input type="text" @bind="staffInfo.Name" reqquired="true" /> </td>
+        </tr>
+        <tr>
+            <td>期望薪資：</td>
+            <td><input type="number" @bind="staffInfo.ExpectedSalary" reqquired /> </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center"></td>
+            <td>
+                <input type="submit" value="Add" />
+                <input type="button" value="Cancel" @onclick="@Cancel" />
+            </td>
+        </tr>
+    </table>
+
+</EditForm>
+
+@code {
+    //Creadit a new, empty Staff object
+    StaffInfo staffInfo = new StaffInfo();
+
+    protected async Task StaffInsert()
+    {
+        try
+        {
+            await StaffService.StaffInsert(staffInfo);
+            //await JS.InvokeAsync<bool>("confirm", "OK");
+
+        }
+        catch (Exception ex)
+        {
+            await JS.InvokeVoidAsync("confirm", ex.Message);
+        }
+
+        //NavigationManager.NavigateTo("/");
+
+    }
+
+    protected void Cancel()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+
+}

@@ -1,0 +1,35 @@
+﻿@page "/counter"
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedLocalStorage localStore
+
+<input type="number" @bind="@inputValue" />
+<p>Current count: <strong>@currrentValue</strong></p>
+
+<CountComponent CurrentValueChange="IncrementCount" inputValue="@inputValue" currentValue="@currrentValue"></CountComponent>
+
+@code {
+
+    public int inputValue = 0;
+    public int currrentValue = 0;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var result = await localStore.GetAsync<int>("count");
+            currrentValue = result.Success ? result.Value : 0;
+            StateHasChanged();
+        }
+    }
+
+    /// <summary>
+    /// 增加
+    /// </summary>
+    /// <param name="result"></param>
+    protected async Task IncrementCount(int result)
+    {
+        currrentValue = result;
+        await localStore.SetAsync("count", currrentValue);
+    }
+
+}
