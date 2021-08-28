@@ -10,7 +10,7 @@
 
 <EditForm Model="@staffInfo" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
-    @*<ValidationSummary />*@
+    <ValidationSummary />
 
     <table>
         <tr>
@@ -52,7 +52,7 @@
         staffInfo.UpdDtm = DateTime.Now;
         Message = $"{staffInfo.Name} , {staffInfo.ExpectedSalary},{staffInfo.UpdDtm}";
     }
-  
+
 
     protected void Cancel()
     {
