@@ -1,0 +1,17 @@
+﻿@page "/MyMessage"
+@inject IJSRuntime jsr
+@using BlazorServerDemo.Data
+
+<MyEvent OnMyMessage=HandleMyMessage />
+
+@code { 
+    public int Code { get; set; }
+
+    public string Msg { get; set; }
+
+    protected async Task HandleMyMessage(MyMessage msg)
+    {
+        await jsr.InvokeVoidAsync("alert", $"MyMessage:{msg.Code}:{msg.Msg}");
+    }
+ }
+

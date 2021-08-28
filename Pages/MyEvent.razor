@@ -1,0 +1,19 @@
+﻿@using BlazorServerDemo.Data
+<button @onclick="HandleClick">送出我的訊息</button>
+
+@code{@* 接受父層的EventCallback event 參數 *@ 
+
+        [Parameter] public EventCallback<MyMessage> OnMyMessage { get; set; }
+
+        void HandleClick()
+        {
+            MyMessage msg = new()
+            {
+                Code = 6,
+                Msg = "我很讚"
+            };
+
+            @* events up:將訊息往上送給父層 *@
+            OnMyMessage.InvokeAsync(msg);
+        }
+}
