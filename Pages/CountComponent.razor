@@ -1,15 +1,15 @@
 ﻿
-<button @onclick="AddNumber">數字加加</button>
+<button class="button" @onclick="AddNumber">數字加加</button>
 
 @code {
     [Parameter] public int CurrentValue { get; set; }
-    [Parameter] public EventCallback<int> CurrentValueChange { get; set; }
+    [Parameter] public EventCallback<int> OnCurrentValueChange { get; set; }
     [Parameter] public int InputValue { get; set; }
 
     protected async void AddNumber()
     {
-        CurrentValue += InputValue;
-        await CurrentValueChange.InvokeAsync(CurrentValue);
+        CurrentValue += InputValue + 1;
+        await OnCurrentValueChange.InvokeAsync(CurrentValue);
     }
 
 }
