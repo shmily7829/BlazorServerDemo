@@ -2,10 +2,12 @@
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @inject ProtectedLocalStorage localStore
 
+
 <input class="input" type="number" @bind="inputValue" />
 <p>Current count: @currrentValue</p>
 
 <CountComponent OnCurrentValueChange=IncrementCount InputValue=inputValue></CountComponent>
+<CounterL2></CounterL2>
 
 @code {
 

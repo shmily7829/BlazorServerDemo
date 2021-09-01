@@ -1,4 +1,5 @@
 ﻿@using BlazorServerDemo.Data
+@using System.Text.Json;
 @page "/staffadd"
 @inject IStaffService StaffService
 @inject NavigationManager NavigationManager
@@ -37,7 +38,7 @@
         </tr>
         <tr>
             <td>
-                IJSRuntime 顯示alert訊息          
+                IJSRuntime 顯示alert訊息
             </td>
             <td>
                 <a href="https://www.gushiciku.cn/pl/puWk/zh-tw">Link Me</a>
@@ -54,7 +55,7 @@
         </tr>
     </table>
 
-    @*<div class="display-1 text-success">@Message</div>*@
+    <pre class="font-weight-light">@Message</pre>
 
 </EditForm>
 
@@ -69,7 +70,7 @@
         //staffInfo.UpdDtm = DateTime.Now;
         //Message = $"{staffInfo.Name},\n{staffInfo.ExpectedSalary},\n{staffInfo.UpdDtm}";
 
-        Message = await StaffService.StaffInsert(staffInfo);
+        Message = StaffService.StaffInsert(staffInfo);
         await JS.InvokeVoidAsync("alert", Message);
     }
 

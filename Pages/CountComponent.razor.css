@@ -1,17 +1,9 @@
 ﻿
-.input {
-    padding: 5px 15px;
-    border: 2px black solid;
-    cursor: pointer;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-}
 
 .h1 {
     color: red;
 }
-
- .button {
+.button {
     background-color: cornflowerblue;
     border: none;
     color: white;
@@ -21,3 +13,4 @@
     display: inline-block;
     font-size: 16px;
 }
+
